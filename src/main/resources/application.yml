@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: Product-Service
+  profiles:
+    active: dev
+
+
+server:
+  port: 8088
+  servlet:
+    contextPath: /product-service
+
+
