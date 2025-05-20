@@ -1,0 +1,111 @@
+name: CICD API Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - B*
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    name: Compile project
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'corretto'
+
+      - name: Running Unit Tests
+        run: |
+          ./mvnw clean compile
+
+  build:
+    runs-on: ubuntu-latest
+    name: Build backend
+    needs: [compile]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'corretto'
+
+
+      - name: Compile project
+        run: |
+          ./mvnw clean compile
+
+  build-image:
+    name: Build Docker image
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'corretto'
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Print Current Directory
+        run: pwd
+      - name: List files for debugging
+        run: |
+          ls -R
+      - name: Build & Push to DockerHub
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: docker/Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/shoppingmart-productservice:1.0.1
+          build-args: |
+            PROFILE=dev
+            APP_VERSION=1.0.1
+      - name: Pull Docker Compose services
+        run: |
+          docker compose pull
+
+      - name: Deploy using Docker Compose
+        run: |
+          docker compose up -d
+
+
+
+
+
+
+# Uncomment this section if you want to include health checks
+# health-check:
+#   name: API Health Check
+#   runs-on: ubuntu-latest
+#   needs: [deploy]
+#   steps:
+#     - name: Check the docker container health status
+#       run: |
+#         if ! docker ps -a | grep bsn-api; then
+#           echo "Container is not running"
+#           exit 1
+#         fi

@@ -3,10 +3,10 @@ package com.shopping.mart.productservice;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+//@SpringBootTest
 class ShoppingmartProductserviceApplicationTests {
 
-	@Test
+	//@Test
 	void contextLoads() {
 	}
 

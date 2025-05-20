@@ -1,21 +1,25 @@
 package com.shopping.mart.productservice.dto;
 
-import com.shopping.mart.productservice.entity.Categories;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
 @Data
-@Builder
+@AllArgsConstructor
 public class ProductDto {
-    private UUID productuuid;
+    private String productuuid;
     private String productName;
     private String productDescription;
     private BigDecimal productPrice;
+    private String productImgSrc;
     private CategoryDto category;
 
 
+    public ProductDto() {
 
+    }
 }

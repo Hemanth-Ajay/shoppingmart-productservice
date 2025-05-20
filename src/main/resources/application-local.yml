@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: dbc:mysql://mysql:3306/product
-    username: admin
-    password: productdb
+    url: jdbc:mysql://localhost:3306/shopping
+    username: root
+    password: Hemanthajay@27
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:

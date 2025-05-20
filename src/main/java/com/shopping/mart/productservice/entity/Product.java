@@ -20,6 +20,8 @@ public class Product extends BaseEntity {
     private String productDescription;
     @Column(name = "PRODUCT_PRICE")
     private BigDecimal productPrice;
+    @Column(name = "PRODUCT_IMG_SRC")
+    private String productImageSrc;
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "CATEGORY_UUID")
     private Categories categories;

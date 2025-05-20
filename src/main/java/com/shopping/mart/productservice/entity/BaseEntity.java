@@ -12,11 +12,11 @@ import java.util.UUID;
 public class BaseEntity {
 
     @Id
-    private UUID objectuuid;
+    private String objectuuid;
 
     @PrePersist
     public void setUuid() {
-        this.objectuuid = generateUuid();
+        this.objectuuid = generateUuid().toString();
     }
 
     private UUID generateUuid() {

@@ -1,0 +1,34 @@
+services:
+  mysql:
+    container_name: mysql-sql-shoppingmart-products-db
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root                 # Set the root password
+      MYSQL_USER: admin                           # Set the username
+      MYSQL_PASSWORD: productdb            # Set the user's password
+      MYSQL_DATABASE: products                    # Set the initial database name
+    volumes:
+      - mysql:/var/lib/mysql                     # MySQL data directory
+    ports:
+      - 3307:3306                                 # MySQL default port
+    networks:
+      - spring-shopping
+    restart: unless-stopped
+
+  student-api:
+    container_name: shoppingmart-productservice
+    image: hemanthajay/shoppingmart-productservice:1.0.1
+    ports:
+      - 8088:8088
+    networks:
+      - spring-shopping
+    depends_on:
+      - mysql
+
+networks:
+  spring-shopping:
+    driver: bridge
+
+volumes:
+  mysql:
+    driver: local

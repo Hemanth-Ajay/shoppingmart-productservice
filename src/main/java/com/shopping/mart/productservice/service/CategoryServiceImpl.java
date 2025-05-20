@@ -20,7 +20,7 @@ public class CategoryServiceImpl implements ICategoryService {
     @Transactional
     public void saveCategory(CategoryDto categoryDto) {
         Categories categoriesEntity = categoryMapper.mapToCategoryEntity(categoryDto);
-        iCategoriesRepository.save(categoriesEntity);
+        iCategoriesRepository.saveAndFlush(categoriesEntity);
     }
 
     @Override

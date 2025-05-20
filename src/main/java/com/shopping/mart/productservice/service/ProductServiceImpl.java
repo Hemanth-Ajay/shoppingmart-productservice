@@ -31,6 +31,13 @@ public class ProductServiceImpl implements IProductService {
             throw new BusinessValidationExceptions(errors);
         }
         Product productEntity = productMapper.mapToProductDtoToProductEntity(productDto);
-        iProductRepository.save(productEntity);
+        iProductRepository.saveAndFlush(productEntity);
+    }
+
+    @Override
+    @Transactional
+    public List<ProductDto> fetchAllProducts() {
+        List<Product> listProduct = iProductRepository.findAll();
+        return productMapper.mapListOfProductEntityToProductDto(listProduct);
     }
 }

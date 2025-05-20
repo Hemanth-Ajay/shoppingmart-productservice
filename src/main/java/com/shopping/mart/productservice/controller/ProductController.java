@@ -7,16 +7,14 @@ import com.shopping.mart.productservice.validation.ProductDtoValidation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping(path = "/product/api/v1")
 @RequiredArgsConstructor
+@CrossOrigin
 public class ProductController {
     private final IProductService iProductService;
     private final ProductDtoValidation productDtoValidation;
@@ -30,5 +28,12 @@ public class ProductController {
         iProductService.saveProduct(productDto);
 
         return new ResponseEntity<>("Product Created Successfully", HttpStatus.OK);
+    }
+
+    @GetMapping(path ="/listOfProducts")
+    public ResponseEntity<List<ProductDto>> fetchAllProducts(){
+
+        List<ProductDto> allProducts = iProductService.fetchAllProducts();
+        return new ResponseEntity<>(allProducts,HttpStatus.OK);
     }
 }

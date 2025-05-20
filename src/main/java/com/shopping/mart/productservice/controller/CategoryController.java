@@ -17,6 +17,7 @@ import java.util.UUID;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/category/api/v1")
+@CrossOrigin
 public class CategoryController {
 
     private final CategoryDtoValidation categoryDtoValidation;
