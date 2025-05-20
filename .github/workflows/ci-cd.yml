@@ -86,11 +86,11 @@ jobs:
             APP_VERSION=1.0.1
       - name: Pull Docker Compose services
         run: |
-          docker compose pull
+          docker compose -f docker/product-compose.yml pull
 
       - name: Deploy using Docker Compose
         run: |
-          docker compose up -d
+          docker compose -f docker/product-compose.yml up -d
 
 
 
